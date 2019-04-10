@@ -7,6 +7,7 @@ import nl.wouterr.experiment.serializer.{
 }
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
+import org.apache.flink.api.scala._
 
 object Main {
 
@@ -29,6 +30,14 @@ object Main {
       recordTopic,
       new Json4sRecordDeserializer,
       brokerProperties)
+
+    environment
+      .addSource(kafkaJsoniterConsumer)
+      .filter(_.routingKey == "ent.commits.insert")
+
+    environment
+      .addSource(kafkaJson4sConsumer)
+      .filter(_.routingKey == "ent.commits.insert")
 
     environment.execute("JSON4s vs Jsoniter experiment")
   }

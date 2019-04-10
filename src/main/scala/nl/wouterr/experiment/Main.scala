@@ -27,6 +27,8 @@ object Main {
       new JsoniterRecordDeserializer,
       brokerProperties)
 
+    kafkaJsoniterConsumer.setStartFromLatest()
+
     val kafkaJson4sConsumer = new FlinkKafkaConsumer[Record](
       recordTopic,
       new Json4sRecordDeserializer,

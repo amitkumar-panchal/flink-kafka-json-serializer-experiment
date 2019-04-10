@@ -1,1 +1,2 @@
-flink-kafka-json-serializer-experiment
+# JSON SerDe performance in Flink/Kafka environment
+

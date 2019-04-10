@@ -10,9 +10,8 @@ import com.github.plokhotnyuk.jsoniter_scala.core._
 
 class JsoniterCommitExtractor extends MapFunction[Record, Commit] {
 
-  implicit val codec = JsonCodecMaker.make[Commit](CodecMakerConfig())
+  @transient
+  implicit lazy val codec = JsonCodecMaker.make[Commit](CodecMakerConfig())
 
-  override def map(value: Record): Commit = {
-    readFromString(value.routingKey)
-  }
+  override def map(value: Record): Commit = readFromString(value.routingKey)
 }

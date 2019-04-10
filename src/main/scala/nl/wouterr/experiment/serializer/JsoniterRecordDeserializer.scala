@@ -11,10 +11,10 @@ import org.apache.flink.api.common.typeinfo.TypeInformation
 
 class JsoniterRecordDeserializer extends DeserializationSchema[Record] {
 
-  implicit val codec = JsonCodecMaker.make[Record](CodecMakerConfig())
-
-  override def deserialize(message: Array[Byte]): Record =
+  override def deserialize(message: Array[Byte]): Record = {
+    implicit val codec = JsonCodecMaker.make[Record](CodecMakerConfig())
     readFromArray(message)
+  }
 
   override def isEndOfStream(nextElement: Record): Boolean = false
 

@@ -3,6 +3,7 @@ package nl.wouterr.experiment
 import nl.wouterr.experiment.Protocol.Record
 import nl.wouterr.experiment.serializer.{
   Json4sRecordDeserializer,
+  JsoniterCommitExtractor,
   JsoniterRecordDeserializer
 }
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
@@ -31,13 +32,15 @@ object Main {
       new Json4sRecordDeserializer,
       brokerProperties)
 
+    //environment
+    //  .addSource(kafkaJsoniterConsumer)
+    // .filter(_.routingKey == "ent.commits.insert")
+
     environment
       .addSource(kafkaJsoniterConsumer)
       .filter(_.routingKey == "ent.commits.insert")
-
-    environment
-      .addSource(kafkaJson4sConsumer)
-      .filter(_.routingKey == "ent.commits.insert")
+      .map(new JsoniterCommitExtractor)
+      .print()
 
     environment.execute("JSON4s vs Jsoniter experiment")
   }

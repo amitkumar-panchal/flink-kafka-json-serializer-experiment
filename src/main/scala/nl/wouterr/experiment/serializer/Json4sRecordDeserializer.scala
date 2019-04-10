@@ -11,9 +11,9 @@ import org.json4s.jackson.Serialization
 import org.json4s.jackson.Serialization.read
 
 class Json4sRecordDeserializer extends DeserializationSchema[Record] {
-  implicit val formats = DefaultFormats
 
   override def deserialize(message: Array[Byte]): Record = {
+    implicit lazy val formats = DefaultFormats
     read[Record](new String(message, StandardCharsets.UTF_8))
   }
 

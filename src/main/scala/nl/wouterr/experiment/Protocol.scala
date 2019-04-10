@@ -1,6 +1,6 @@
 package nl.wouterr.experiment
 
-import java.util.Date
+import java.time.ZonedDateTime
 
 object Protocol {
 
@@ -35,7 +35,7 @@ object Protocol {
                         comment_count: Int,
                         verification: Verification)
 
-  case class CommitUser(name: String, email: String, date: Date)
+  case class CommitUser(name: String, email: String, date: ZonedDateTime)
 
   case class User(id: Long,
                   login: String,
